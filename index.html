@@ -1,0 +1,973 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bus Éireann: Ireland's most extensive bus network</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            color: #333;
+            background-color: #f5f5f5;
+        }
+
+        /* ── HEADER ── */
+        header {
+            background-color: #c8102e;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.3);
+        }
+
+        nav {
+            display: flex;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            height: 68px;
+            gap: 4px;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            text-decoration: none;
+            margin-right: 20px;
+            flex-shrink: 0;
+        }
+
+        .logo-circle {
+            width: 46px;
+            height: 46px;
+            background: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+
+        /* SVG stag icon */
+        .logo-circle svg {
+            width: 32px;
+            height: 32px;
+        }
+
+        .logo-text {
+            color: white;
+            font-size: 17px;
+            font-weight: bold;
+            line-height: 1.2;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            align-items: center;
+            gap: 2px;
+            flex: 1;
+        }
+
+        .nav-links li {
+            position: relative;
+        }
+
+        .nav-links li a {
+            color: white;
+            text-decoration: none;
+            padding: 6px 10px;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            font-size: 13px;
+            font-weight: 500;
+            white-space: nowrap;
+            border-radius: 4px;
+            transition: background 0.15s;
+        }
+
+        .nav-links li a:hover {
+            background-color: rgba(255,255,255,0.15);
+        }
+
+        .nav-icon {
+            font-size: 15px;
+        }
+
+        .arrow {
+            font-size: 9px;
+            margin-left: 1px;
+        }
+
+        .expressway-link {
+            display: flex;
+            align-items: center;
+            color: white;
+            text-decoration: none;
+            padding: 6px 10px;
+            font-size: 13px;
+            font-weight: 600;
+            gap: 4px;
+            border-radius: 4px;
+            transition: background 0.15s;
+        }
+
+        .expressway-link:hover {
+            background-color: rgba(255,255,255,0.15);
+        }
+
+        .tfi-logo {
+            margin-left: 10px;
+            background-color: white;
+            padding: 5px 10px;
+            border-radius: 5px;
+            flex-shrink: 0;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .tfi-box {
+            background-color: #003d7a;
+            color: white;
+            font-weight: 900;
+            font-size: 13px;
+            padding: 3px 6px;
+            border-radius: 2px;
+            letter-spacing: 0.5px;
+        }
+
+        .tfi-text {
+            font-size: 9px;
+            font-weight: bold;
+            color: #003d7a;
+            text-transform: uppercase;
+            line-height: 1.3;
+        }
+
+        /* ── MAIN ── */
+        main {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        section {
+            margin-bottom: 50px;
+        }
+
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 24px;
+        }
+
+        .section-header h2 {
+            font-size: 28px;
+            font-weight: bold;
+            color: #1a1a1a;
+        }
+
+        .view-all {
+            color: #c8102e;
+            text-decoration: none;
+            font-size: 13px;
+            font-weight: bold;
+            letter-spacing: 0.8px;
+        }
+
+        .view-all:hover {
+            text-decoration: underline;
+        }
+
+        /* ── NEWS CARDS ── */
+        .news-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+        }
+
+        .news-card {
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.09);
+            overflow: hidden;
+            transition: box-shadow 0.2s;
+        }
+
+        .news-card:hover {
+            box-shadow: 0 6px 20px rgba(0,0,0,0.14);
+        }
+
+        .news-img {
+            width: 100%;
+            height: 185px;
+            object-fit: cover;
+            display: block;
+        }
+
+        /* Placeholder images built with CSS */
+        .img-june {
+            width: 100%;
+            height: 185px;
+            background: linear-gradient(160deg, #b5d99c 0%, #74b55b 50%, #f5e642 100%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .img-june::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(ellipse at 60% 40%, rgba(255,220,50,0.4), transparent 60%);
+        }
+
+        .june-text {
+            font-size: 54px;
+            font-weight: 900;
+            color: white;
+            text-shadow: 3px 3px 6px rgba(0,0,0,0.35);
+            letter-spacing: -3px;
+            line-height: 1;
+        }
+
+        .june-sub {
+            font-size: 11px;
+            font-weight: bold;
+            color: white;
+            text-shadow: 1px 1px 3px rgba(0,0,0,0.4);
+            letter-spacing: 0.5px;
+            text-transform: lowercase;
+            margin-top: 4px;
+        }
+
+        .img-bus {
+            width: 100%;
+            height: 185px;
+            background: linear-gradient(160deg, #1a5c2a 0%, #2d8a3a 60%, #3aaa4a 100%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+
+        .img-bus-badge {
+            position: absolute;
+            top: 12px;
+            left: 12px;
+            background: rgba(0,0,0,0.55);
+            color: white;
+            font-size: 11px;
+            font-weight: bold;
+            padding: 4px 9px;
+            border-radius: 3px;
+            letter-spacing: 0.3px;
+        }
+
+        .bus-icon {
+            font-size: 58px;
+            filter: drop-shadow(2px 3px 5px rgba(0,0,0,0.4));
+        }
+
+        .bus-logo-text {
+            color: white;
+            font-size: 12px;
+            font-weight: bold;
+            margin-top: 6px;
+            opacity: 0.9;
+        }
+
+        .card-body {
+            padding: 20px;
+        }
+
+        .card-date {
+            font-size: 11.5px;
+            color: #777;
+            font-weight: bold;
+            letter-spacing: 0.6px;
+            margin-bottom: 8px;
+            text-transform: uppercase;
+        }
+
+        .card-title {
+            font-size: 19px;
+            font-weight: bold;
+            color: #1a1a1a;
+            margin-bottom: 10px;
+            line-height: 1.3;
+        }
+
+        .card-desc {
+            font-size: 14px;
+            color: #555;
+            line-height: 1.65;
+            margin-bottom: 16px;
+        }
+
+        .read-more {
+            color: #c8102e;
+            text-decoration: none;
+            font-size: 12.5px;
+            font-weight: bold;
+            letter-spacing: 0.6px;
+        }
+
+        .read-more:hover {
+            text-decoration: underline;
+        }
+
+        /* ── SERVICE UPDATE CARDS ── */
+        .service-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+        }
+
+        .service-card {
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.09);
+            padding: 22px;
+            display: flex;
+            flex-direction: column;
+            transition: box-shadow 0.2s;
+        }
+
+        .service-card:hover {
+            box-shadow: 0 6px 20px rgba(0,0,0,0.14);
+        }
+
+        .service-datetime {
+            font-size: 12px;
+            color: #555;
+            margin-bottom: 10px;
+            font-weight: 500;
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 3px 11px;
+            border-radius: 5px;
+            font-size: 12px;
+            font-weight: bold;
+            margin-bottom: 14px;
+            align-self: flex-start;
+        }
+
+        .badge-incident {
+            background-color: #2a7a3a;
+            color: white;
+        }
+
+        .routes {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+            margin-bottom: 22px;
+            flex: 1;
+        }
+
+        .route-pill {
+            background-color: #2e2e2e;
+            color: white;
+            padding: 3px 10px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: bold;
+        }
+
+        /* ── INFO BLOCKS ── */
+        .info-blocks {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        .info-block {
+            border-radius: 8px;
+            padding: 38px 36px;
+            color: white;
+            display: flex;
+            align-items: center;
+            gap: 24px;
+            transition: filter 0.2s;
+        }
+
+        .info-block:hover {
+            filter: brightness(1.07);
+        }
+
+        .info-block-blue  { background-color: #1a3a5c; }
+        .info-block-purple { background-color: #6b3fa0; }
+
+        .info-block-icon {
+            font-size: 64px;
+            flex-shrink: 0;
+            opacity: 0.85;
+        }
+
+        .info-block-content h3 {
+            font-size: 23px;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .info-block-content p {
+            font-size: 14px;
+            line-height: 1.55;
+            opacity: 0.9;
+            margin-bottom: 16px;
+        }
+
+        .info-block-content a {
+            color: white;
+            text-decoration: none;
+            font-size: 14px;
+        }
+
+        .info-block-content a:hover {
+            text-decoration: underline;
+        }
+
+        /* ── CITY CARDS ── */
+        .city-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+        }
+
+        .city-card {
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.09);
+            overflow: hidden;
+            transition: box-shadow 0.2s;
+        }
+
+        .city-card:hover {
+            box-shadow: 0 6px 20px rgba(0,0,0,0.14);
+        }
+
+        .city-img {
+            width: 100%;
+            height: 148px;
+            display: flex;
+            align-items: flex-end;
+            justify-content: flex-start;
+            padding: 10px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .city-img-cork    { background: linear-gradient(155deg,#6aaa7a 0%,#3a7a4a 55%,#2a5a3a 100%); }
+        .city-img-galway  { background: linear-gradient(155deg,#e8a050 0%,#c87020 55%,#a05010 100%); }
+        .city-img-limerick{ background: linear-gradient(155deg,#7aaac8 0%,#4a7aaa 55%,#2a5a8a 100%); }
+        .city-img-waterford{ background: linear-gradient(155deg,#aa7ad0 0%,#7a4aaa 55%,#5a2a8a 100%); }
+
+        .city-emoji {
+            font-size: 52px;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            filter: drop-shadow(1px 2px 4px rgba(0,0,0,0.4));
+        }
+
+        .city-card-body {
+            padding: 16px;
+        }
+
+        .city-card-body h3 {
+            font-size: 17px;
+            font-weight: bold;
+            margin-bottom: 7px;
+            color: #1a1a1a;
+        }
+
+        .city-card-body p {
+            font-size: 13px;
+            color: #666;
+            margin-bottom: 11px;
+            line-height: 1.5;
+        }
+
+        /* ── FOOTER ── */
+        footer {
+            background-color: #363636;
+            color: white;
+            padding: 42px 20px 30px;
+        }
+
+        .footer-inner {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .footer-links {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+            margin-bottom: 32px;
+        }
+
+        .footer-links a {
+            color: white;
+            text-decoration: none;
+            font-size: 16px;
+            font-weight: bold;
+            display: block;
+            margin-bottom: 18px;
+            transition: opacity 0.15s;
+        }
+
+        .footer-links a:hover {
+            opacity: 0.75;
+        }
+
+        .footer-divider {
+            border: none;
+            border-top: 1px solid #555;
+            margin-bottom: 24px;
+        }
+
+        .footer-bottom {
+            display: flex;
+            align-items: center;
+            gap: 22px;
+            flex-wrap: wrap;
+        }
+
+        .tfi-footer {
+            background: white;
+            border-radius: 5px;
+            padding: 7px 10px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            flex-shrink: 0;
+        }
+
+        .tfi-footer .tfi-box {
+            background-color: #003d7a;
+            color: white;
+            font-weight: 900;
+            font-size: 13px;
+            padding: 3px 6px;
+            border-radius: 2px;
+        }
+
+        .tfi-footer .tfi-text {
+            font-size: 9px;
+            font-weight: bold;
+            color: #003d7a;
+            line-height: 1.3;
+            text-transform: uppercase;
+        }
+
+        .cookies-btn {
+            background: transparent;
+            border: 1px solid white;
+            color: white;
+            padding: 8px 18px;
+            cursor: pointer;
+            font-size: 11.5px;
+            letter-spacing: 1px;
+            font-weight: bold;
+            border-radius: 2px;
+            transition: background 0.15s;
+        }
+
+        .cookies-btn:hover {
+            background: rgba(255,255,255,0.1);
+        }
+
+        .copyright {
+            font-size: 13px;
+            color: #ccc;
+            flex: 1;
+            text-align: center;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 12px;
+        }
+
+        .social-link {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            border: 2px solid white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            text-decoration: none;
+            font-size: 15px;
+            font-weight: bold;
+            transition: background 0.15s;
+        }
+
+        .social-link:hover {
+            background: rgba(255,255,255,0.15);
+        }
+
+        /* ── RESPONSIVE ── */
+        @media (max-width: 900px) {
+            .news-grid,
+            .service-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+            .city-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+            .info-blocks {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 600px) {
+            .news-grid,
+            .service-grid,
+            .city-grid {
+                grid-template-columns: 1fr;
+            }
+            .nav-links {
+                display: none;
+            }
+            .footer-links {
+                grid-template-columns: 1fr 1fr;
+            }
+            .footer-bottom {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ── HEADER ── -->
+    <header>
+        <nav>
+            <a href="#" class="logo">
+                <div class="logo-circle">
+                    <!-- Stag SVG icon -->
+                    <svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M32 8 C28 8 24 12 24 16 C24 18 25 20 26 21 L22 24 L18 20 L16 22 L20 26 L18 30 L22 32 L24 36 L28 40 L28 52 L36 52 L36 40 L40 36 L42 32 L46 30 L44 26 L48 22 L46 20 L42 24 L38 21 C39 20 40 18 40 16 C40 12 36 8 32 8Z" fill="#c8102e"/>
+                        <path d="M20 14 L16 10 L14 14 L18 16Z" fill="#c8102e"/>
+                        <path d="M44 14 L48 10 L50 14 L46 16Z" fill="#c8102e"/>
+                        <path d="M18 16 L14 14 L13 18 L17 18Z" fill="#c8102e"/>
+                        <path d="M46 16 L50 14 L51 18 L47 18Z" fill="#c8102e"/>
+                    </svg>
+                </div>
+                <span class="logo-text">Bus Éireann</span>
+            </a>
+
+            <ul class="nav-links">
+                <li>
+                    <a href="#">
+                        <span class="nav-icon">📅</span> Plan Journey <span class="arrow">▾</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
+                        <span class="nav-icon">🕐</span> Real time
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
+                        <span class="nav-icon">🚌</span> Service Information <span class="arrow">▾</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
+                        <span class="nav-icon">ℹ️</span> Customer Information <span class="arrow">▾</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
+                        <span class="nav-icon">📚</span> School Transport <span class="arrow">▾</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#" class="expressway-link">Expressway ↗</a>
+                </li>
+            </ul>
+
+            <div class="tfi-logo">
+                <div class="tfi-box">TFI</div>
+                <div class="tfi-text">TRANSPORT<br>FOR<br>IRELAND</div>
+            </div>
+        </nav>
+    </header>
+
+    <!-- ── MAIN ── -->
+    <main>
+
+        <!-- News Updates -->
+        <section>
+            <div class="section-header">
+                <h2>News Updates</h2>
+                <a href="#" class="view-all">VIEW ALL NEWS</a>
+            </div>
+            <div class="news-grid">
+
+                <!-- Card 1 -->
+                <div class="news-card">
+                    <div class="img-june">
+                        <div class="june-text">JUNE</div>
+                        <div class="june-sub">bank holiday weekend</div>
+                    </div>
+                    <div class="card-body">
+                        <div class="card-date">10 MAY 2026</div>
+                        <div class="card-title">June Bank Holiday Travel Arrangements</div>
+                        <div class="card-desc">We wish to advise customers of travel arrangements on Bank Holiday Monday, 1 June 2026</div>
+                        <a href="#" class="read-more">READ MORE</a>
+                    </div>
+                </div>
+
+                <!-- Card 2 -->
+                <div class="news-card">
+                    <div class="img-bus">
+                        <span class="img-bus-badge">Service Diversions</span>
+                        <span class="bus-icon">🚌</span>
+                        <span class="bus-logo-text">Bus Éireann</span>
+                    </div>
+                    <div class="card-body">
+                        <div class="card-date">8 MAY 2026</div>
+                        <div class="card-title">Diversions in Waterford City</div>
+                        <div class="card-desc">Due to the Munster Senior Hurling matches scheduled in Waterford this Saturday 9 May, services will...</div>
+                        <a href="#" class="read-more">READ MORE</a>
+                    </div>
+                </div>
+
+                <!-- Card 3 -->
+                <div class="news-card">
+                    <div class="img-bus" style="background: linear-gradient(160deg,#1a5c2a 0%,#24742e 60%,#0e3a1a 100%);">
+                        <span class="bus-icon">🚌</span>
+                        <span class="bus-logo-text">Bus Éireann</span>
+                    </div>
+                    <div class="card-body">
+                        <div class="card-date">7 APR 2026</div>
+                        <div class="card-title">Timetable Updates effective 24 May 2026</div>
+                        <div class="card-desc">We wish to advise customers of alterations to timetables effective 24 May 2026</div>
+                        <a href="#" class="read-more">READ MORE</a>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- Service Updates -->
+        <section>
+            <div class="section-header">
+                <h2>Service Updates</h2>
+                <a href="#" class="view-all">VIEW ALL UPDATES</a>
+            </div>
+            <div class="service-grid">
+
+                <div class="service-card">
+                    <div class="service-datetime">14 MAY 2026 • 8:44 AM</div>
+                    <span class="badge badge-incident">Incident</span>
+                    <div class="routes">
+                        <span class="route-pill">202</span>
+                        <span class="route-pill">203</span>
+                        <span class="route-pill">212</span>
+                        <span class="route-pill">241</span>
+                        <span class="route-pill">245</span>
+                        <span class="route-pill">261</span>
+                        <span class="route-pill">40</span>
+                    </div>
+                    <a href="#" class="read-more">READ MORE</a>
+                </div>
+
+                <div class="service-card">
+                    <div class="service-datetime">14 MAY 2026 • 6:02 AM</div>
+                    <span class="badge badge-incident">Incident</span>
+                    <div class="routes">
+                        <span class="route-pill">330</span>
+                        <span class="route-pill">343</span>
+                        <span class="route-pill">450</span>
+                        <span class="route-pill">51</span>
+                        <span class="route-pill">64</span>
+                    </div>
+                    <a href="#" class="read-more">READ MORE</a>
+                </div>
+
+                <div class="service-card">
+                    <div class="service-datetime">14 MAY 2026 • 1:01 AM</div>
+                    <span class="badge badge-incident">Incident</span>
+                    <div class="routes">
+                        <span class="route-pill">101</span>
+                        <span class="route-pill">103</span>
+                        <span class="route-pill">105</span>
+                        <span class="route-pill">109</span>
+                        <span class="route-pill">111A</span>
+                        <span class="route-pill">115</span>
+                        <span class="route-pill">174</span>
+                        <span class="route-pill">174A</span>
+                        <span class="route-pill">174B</span>
+                        <span class="route-pill">D1</span>
+                        <span class="route-pill">D2</span>
+                        <span class="route-pill">NX</span>
+                        <span class="route-pill">360A</span>
+                        <span class="route-pill">40</span>
+                        <span class="route-pill">W5</span>
+                    </div>
+                    <a href="#" class="read-more">READ MORE</a>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- Info Blocks -->
+        <section>
+            <div class="info-blocks">
+                <div class="info-block info-block-blue">
+                    <div class="info-block-icon">📅</div>
+                    <div class="info-block-content">
+                        <h3>Routes &amp; Timetables</h3>
+                        <p>Latest information on our schedule, travel news and how to contact us.</p>
+                        <a href="#">Learn More</a>
+                    </div>
+                </div>
+                <div class="info-block info-block-purple">
+                    <div class="info-block-icon">🕐</div>
+                    <div class="info-block-content">
+                        <h3>Real Time Information</h3>
+                        <p>Search for your service and track your coach in real time.</p>
+                        <a href="#">Learn More</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- City Services -->
+        <section>
+            <div class="city-grid">
+
+                <div class="city-card">
+                    <div class="city-img city-img-cork">
+                        <span class="city-emoji">🏙️</span>
+                    </div>
+                    <div class="city-card-body">
+                        <h3>Cork City Services</h3>
+                        <p>Here are the routes that serve Cork City</p>
+                        <a href="#" class="read-more">READ MORE</a>
+                    </div>
+                </div>
+
+                <div class="city-card">
+                    <div class="city-img city-img-galway">
+                        <span class="city-emoji">⛵</span>
+                    </div>
+                    <div class="city-card-body">
+                        <h3>Galway City Services</h3>
+                        <p>Here are the routes that serve Galway City</p>
+                        <a href="#" class="read-more">READ MORE</a>
+                    </div>
+                </div>
+
+                <div class="city-card">
+                    <div class="city-img city-img-limerick">
+                        <span class="city-emoji">🏰</span>
+                    </div>
+                    <div class="city-card-body">
+                        <h3>Limerick City Services</h3>
+                        <p>Here are the routes that serve Limerick City</p>
+                        <a href="#" class="read-more">READ MORE</a>
+                    </div>
+                </div>
+
+                <div class="city-card">
+                    <div class="city-img city-img-waterford">
+                        <span class="city-emoji">🎡</span>
+                    </div>
+                    <div class="city-card-body">
+                        <h3>Waterford City Services</h3>
+                        <p>Here are the routes that serve Waterford City</p>
+                        <a href="#" class="read-more">READ MORE</a>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+    </main>
+
+    <!-- ── FOOTER ── -->
+    <footer>
+        <div class="footer-inner">
+            <div class="footer-links">
+                <div>
+                    <a href="#">Careers</a>
+                    <a href="#">Real Time</a>
+                </div>
+                <div>
+                    <a href="#">Services</a>
+                    <a href="#">Customer</a>
+                </div>
+                <div>
+                    <a href="#">Schools</a>
+                    <a href="#">Contact Us</a>
+                </div>
+            </div>
+
+            <hr class="footer-divider">
+
+            <div class="footer-bottom">
+                <div class="tfi-footer">
+                    <div class="tfi-box">TFI</div>
+                    <div class="tfi-text">TRANSPORT<br>FOR<br>IRELAND</div>
+                </div>
+
+                <button class="cookies-btn" onclick="alert('Cookies settings')">COOKIES SETTINGS</button>
+
+                <span class="copyright">Copyright &copy; 2026 Bus Éireann</span>
+
+                <div class="social-links">
+                    <a href="#" class="social-link" title="Twitter/X">&#120143;</a>
+                    <a href="#" class="social-link" title="Instagram">&#128247;</a>
+                    <a href="#" class="social-link" title="Facebook">f</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Dropdown nav toggle (simple toggle for demonstration)
+        document.querySelectorAll('.nav-links a').forEach(link => {
+            link.addEventListener('click', e => {
+                if (link.textContent.includes('▾')) e.preventDefault();
+            });
+        });
+
+        // Smooth hover lift for cards
+        document.querySelectorAll('.news-card, .service-card, .city-card').forEach(card => {
+            card.style.cursor = 'pointer';
+            card.addEventListener('click', () => {
+                const rm = card.querySelector('.read-more');
+                if (rm) rm.click();
+            });
+        });
+    </script>
+
+</body>
+</html>
